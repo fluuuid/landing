@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080809" />
+    <meta
+      name="description"
+      content="FLUUUID — an exploration of form, motion, and digital space."
+    />
+    <meta property="og:title" content="FLUUUID — Always in motion" />
+    <meta
+      property="og:description"
+      content="An exploration of form, motion, and digital space."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>FLUUUID — Always in motion</title>
+  </head>
+  <body>
+    <canvas id="atmosphere" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="FLUUUID, back to top"
+        >FLUUUID<span class="brand-mark">◌</span></a
+      >
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#concept">Concept</a>
+        <a href="#explore">Explore</a>
+      </nav>
+      <span class="header-index" aria-hidden="true">FL / 001</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-meta">
+          <span>AN EXPERIMENT IN MOTION</span><span>DIGITAL / 001</span>
+        </div>
+        <div class="hero-center">
+          <div class="logo-wrap" aria-hidden="true">
+            <img
+              class="hero-logo"
+              src="/fluuuid.svg"
+              width="421"
+              height="48"
+              alt=""
+            />
+          </div>
+          <h1 id="hero-title" class="visually-hidden">
+            FLUUUID — Always in motion
+          </h1>
+          <p class="hero-line">Always in motion.</p>
+        </div>
+        <div class="hero-bottom">
+          <span class="coordinates" aria-hidden="true">A SPACE IN FLUX</span>
+          <a class="scroll-cue" href="#concept"
+            ><span>SCROLL TO EXPLORE</span><span class="scroll-line"></span
+          ></a>
+          <button class="replay-intro" id="replay-intro" type="button">
+            REPLAY INTRO <span aria-hidden="true">↻</span>
+          </button>
+        </div>
+      </section>
+
+      <section
+        class="concept section-shell"
+        id="concept"
+        aria-labelledby="concept-title"
+      >
+        <div class="section-label">
+          <span class="label-square"></span><span>01 / CONCEPT</span>
+        </div>
+        <div class="concept-content">
+          <p class="eyebrow">THE IDEA</p>
+          <h2 id="concept-title">Nothing stays <em>still.</em></h2>
+          <p class="section-copy">
+            A digital space shaped by movement. Light becomes form, form becomes
+            signal, and every moment makes room for the next.
+          </p>
+        </div>
+        <div class="section-aside" aria-hidden="true">
+          FORM / MOTION / SPACE
+        </div>
+      </section>
+
+      <section
+        class="explore section-shell"
+        id="explore"
+        aria-labelledby="explore-title"
+      >
+        <div class="section-label">
+          <span class="label-square"></span><span>02 / EXPLORE</span>
+        </div>
+        <div class="explore-head">
+          <div>
+            <p class="eyebrow">A LIVING SURFACE</p>
+            <h2 id="explore-title">Made to <em>move.</em></h2>
+          </div>
+          <p class="section-copy">
+            Move your pointer across the screen. The atmosphere responds in real
+            time, then returns to quiet.
+          </p>
+        </div>
+        <div class="signal-field" aria-hidden="true">
+          <span>F</span><span>L</span><span>U</span><span>U</span><span>U</span
+          ><span>I</span><span>D</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© <span id="year">2026</span> FLUUUID</span>
+      <a href="#top">BACK TO TOP <span aria-hidden="true">↗</span></a>
+      <span>ALWAYS IN MOTION</span>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
