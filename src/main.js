@@ -74,6 +74,7 @@ function createRenderer() {
       "Time",
       "Glitch",
       "Tear",
+      "Damage",
       "Motion",
       "Logo",
     ].map((name) => [name, gl.getUniformLocation(program, `u${name}`)]),
@@ -114,8 +115,8 @@ function createRenderer() {
     raf = 0;
     if (document.hidden || lost) return;
     const seconds = (now - start) / 1000;
-    const { glitch, tear } = reducedMotion.matches
-      ? { glitch: 0, tear: 0 }
+    const { glitch, tear, damage } = reducedMotion.matches
+      ? { glitch: 0, tear: 0, damage: 0 }
       : introAt(seconds);
     pointer = pointer.map(
       (value, index) => value + (target[index] - value) * 0.065,
@@ -132,6 +133,7 @@ function createRenderer() {
     gl.uniform1f(uniforms.Time, reducedMotion.matches ? 3 : seconds);
     gl.uniform1f(uniforms.Glitch, glitch);
     gl.uniform1f(uniforms.Tear, tear);
+    gl.uniform1f(uniforms.Damage, damage);
     gl.uniform1f(uniforms.Motion, reducedMotion.matches ? 0 : 1);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     if (!reducedMotion.matches) requestRender();

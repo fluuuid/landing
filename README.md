@@ -1,6 +1,6 @@
 # FLUUUID landing
 
-A responsive WebGL landing inspired by the supplied 10-second FLUUUID ident. The original SVG is sampled directly in a shader: broken horizontal strips, scanline displacement, six ghost trails, exposure leaks, and signal debris share a stepped 25 fps rhythm. Bursts resolve after 2.88 seconds into the clean wordmark. Use **Replay intro** to watch it again.
+A responsive WebGL landing inspired by the supplied 10-second FLUUUID ident. The original SVG is sampled directly in a shader: fractured letter strips, independent glyph offsets, stretched slices, nine uneven ghost trails, ink abrasion, and ripped fragments give the logo a distressed texture. Screen tearing, exposure leaks, and signal debris share a stepped 25 fps rhythm. Logo damage has its own intensity track, separate from the background interference. Bursts resolve after 2.88 seconds into the clean wordmark. Use **Replay intro** to watch it again.
 
 The layout and SVG remain readable if WebGL is unavailable or its context is lost. Reduced motion disables the glitch and continuous rendering. Rendering pauses in hidden tabs, pixel density is capped at 1.5, and fonts are bundled locally.
 
