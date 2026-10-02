@@ -31,7 +31,7 @@ function createRenderer() {
   const gl = canvas.getContext("webgl", {
     alpha: false,
     antialias: false,
-    powerPreference: "low-power",
+    powerPreference: "high-performance",
   });
   if (!gl) return null;
   const shaders = [];
@@ -97,14 +97,20 @@ function createRenderer() {
   gl.uniform1i(uniforms.Logo, 0);
   let raf = 0,
     lost = false,
-    rect;
+    rect,
+    lastFrame = 0;
   let pointer = [0.5, 0.5],
     target = [0.5, 0.5];
   function measure() {
     rect = logoImage.getBoundingClientRect();
   }
   function resize() {
-    const dpr = Math.min(devicePixelRatio || 1, 1.5);
+    // Keep large / Retina screens from shading millions of unnecessary pixels.
+    const dpr = Math.min(
+      devicePixelRatio || 1,
+      1.5,
+      Math.sqrt(1800000 / (innerWidth * innerHeight)),
+    );
     canvas.width = Math.round(innerWidth * dpr);
     canvas.height = Math.round(innerHeight * dpr);
     gl.viewport(0, 0, canvas.width, canvas.height);
@@ -115,11 +121,13 @@ function createRenderer() {
     raf = 0;
     if (document.hidden || lost) return;
     const seconds = (now - start) / 1000;
+    const dt = Math.min((now - lastFrame) / 1000 || 1 / 60, 0.05);
+    lastFrame = now;
     const { glitch, tear, damage } = reducedMotion.matches
       ? { glitch: 0, tear: 0, damage: 0 }
       : introAt(seconds);
     pointer = pointer.map(
-      (value, index) => value + (target[index] - value) * 0.065,
+      (value, index) => value + (target[index] - value) * (1 - Math.exp(-4 * dt)),
     );
     gl.uniform2f(uniforms.Resolution, canvas.width, canvas.height);
     gl.uniform2f(uniforms.Pointer, ...pointer);
@@ -130,13 +138,20 @@ function createRenderer() {
       rect.width / innerWidth,
       rect.height / innerHeight,
     );
-    gl.uniform1f(uniforms.Time, reducedMotion.matches ? 3 : seconds);
+    gl.uniform1f(
+      uniforms.Time,
+      reducedMotion.matches ? 3 : Math.min(seconds, INTRO_DURATION),
+    );
     gl.uniform1f(uniforms.Glitch, glitch);
     gl.uniform1f(uniforms.Tear, tear);
     gl.uniform1f(uniforms.Damage, damage);
     gl.uniform1f(uniforms.Motion, reducedMotion.matches ? 0 : 1);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    if (!reducedMotion.matches) requestRender();
+    const pointerMoving = pointer.some(
+      (value, index) => Math.abs(target[index] - value) > 0.0001,
+    );
+    if (!reducedMotion.matches && (seconds < INTRO_DURATION || pointerMoving))
+      requestRender();
   }
   function requestRender() {
     if (!raf && !lost && !document.hidden) raf = requestAnimationFrame(draw);
@@ -153,7 +168,9 @@ function createRenderer() {
   window.addEventListener(
     "pointermove",
     (event) => {
+      if (reducedMotion.matches) return;
       target = [event.clientX / innerWidth, 1 - event.clientY / innerHeight];
+      requestRender();
     },
     { passive: true },
   );
